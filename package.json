@@ -1,0 +1,16 @@
+{
+  "name": "wasm-ring-buffer",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "repository": "git@github.com:vmontanheiro/wasm-ring-buffer.git",
+  "author": "Vinícius Montanheiro <vinicius.amonranheiro@gmail.com>",
+  "license": "ASF",
+  "keywords": [
+    "WebAssembly",
+    "wasm",
+    "ringbuffer",
+    "webaudioapi",
+    "pcmdata",
+    "RTP"
+  ]
+}
