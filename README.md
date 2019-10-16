@@ -41,7 +41,7 @@ For browser definitions a WebAssembly implementation can not run in the Main Thr
 
 # Example
 
-## AudioContext + AudioWorket
+## AudioContext + AudioWorklet
 ```
 const inputAudioContext = new AudioContext({ sampleRate: 8000 });
       inputAudioContext.audioWorklet
