@@ -19,10 +19,10 @@ import WasmRingBuffer from 'wasm-ring-buffer';
 
 # How does it work?
 
-The current AudioWorklet only process 128 bytes for each; so if you need a buffer with you own size, you need to use a "Ring Buffer" to manipulate it. So this library does it for you. We enqueue the AudioWorkletProccess buffer into a Circular Linked list(FIFO), and dequeue with your own size.
+The current AudioWorkletProccess only process 128 bytes for each; so if you need a buffer with your own size, you need to use a "Ring Buffer" to manipulate it. So this library does it for you. We enqueue the AudioWorkletProccess buffer into a Circular Linked List(FIFO), and dequeue with your own size.
 
 # Requeriments
-For browser definitions a WebAssembly implementation can not run in the Main Thread, you can use inside of WebWorkers or AudioWorkletNode
+For browser definitions a WebAssembly implementation can not run in the Main Thread, you can use only inside of WebWorkers or AudioWorkletNode
 
 # Scaffold
 ```
@@ -73,7 +73,7 @@ const inputAudioContext = new AudioContext({ sampleRate: 8000 });
 ## your-worklet-processor.js
 
 ```
-import RingBuffer from 'wasm-ring-buffer/index.js';
+import WasmRingBuffer from 'wasm-ring-buffer/index.js';
 import { LOG_TABLE } from './constants.js';
 
 
@@ -82,7 +82,7 @@ class YourWorkletProcessor extends AudioWorkletProcessor {
     super();
     this._bufferSize = options.processorOptions.bufferSize;
     this._capacity = options.processorOptions.capacity;
-    this._ringBuffer = new RingBuffer(this._capacity, this._bufferSize);
+    this._ringBuffer = new WasmRingBuffer(this._capacity, this._bufferSize);
   }
 
   float32ToInt16(float32array) {
@@ -123,14 +123,14 @@ class YourWorkletProcessor extends AudioWorkletProcessor {
   }
 
   process(inputs) {
-    const input = inputs[0];
+    const input = inputs[0]; // channel 1
     const output = new Float32Array(this._bufferSize);
-    this._ringBuffer.enqueue(input[0]);
+    this._ringBuffer.enqueue(input[0]); //storing
 
     while (this._ringBuffer.size() >= this._bufferSize) {
-      this._ringBuffer.dequeue(output);
-      const int16array = this.float32ToInt16(output);
-      const payload = this.linearToAlaw(int16array);
+      this._ringBuffer.dequeue(output); //retrieving 
+      const int16array = this.float32ToInt16(output); 
+      const payload = this.linearToAlaw(int16array); 
       const sharedPayload = new Uint8Array(new SharedArrayBuffer(payload.length)); // sharing buffer memory
       sharedPayload.set(payload, 0);
       this.port.postMessage(sharedPayload); //Sending data to main thread
@@ -144,5 +144,5 @@ registerProcessor(`your-worklet-processor`, YourWorkletProcessor);
 
 ```
 
-## Full implementation is avalaible in project-folder > example > using-react
+## Full code is avalaible in project-folder > example > using-react
 
