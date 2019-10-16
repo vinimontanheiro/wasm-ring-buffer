@@ -1,0 +1,96 @@
+*,*:before,*:after{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	font-size:100%;
+	margin:0;
+	padding:0;
+}
+
+html,body{
+  width:100%;
+  height:100%
+}
+
+#root{
+  width:100%;
+	height:100%;
+}
+
+.app{
+	width:100%;
+	height:100%;
+	background:#fff;
+}
+
+.icon{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin:auto;
+	display:block;
+}
+
+.microphone, .microphone-rec{
+	width:2em;
+	height:6em;
+  border-radius:1em;
+  cursor: pointer;
+}
+
+.microphone{
+  background: #000;
+}
+.microphone-rec{
+  background:red;
+}
+
+.microphone:before,.microphone-rec:before{
+	content:"";
+	position:absolute;
+	bottom:-1em;
+	left:-1em;
+	width:4em;
+	height:0.5em;
+}
+
+.microphone:before{
+  background:#000;
+}
+
+.microphone-rec:before{
+  background:red;
+}
+
+.microphone:after,.microphone-rec:after{
+	content:"";
+	position:absolute;
+	bottom:-0.5em;
+	left:-0.5em;
+	width:3em;
+  height:3em;
+	border-radius:0 0 1.5em 1.5em;
+}
+
+.microphone:after{
+  border:0.3em solid #000;
+  border-top:0.3em solid #fff;
+}
+
+.microphone-rec:after{
+  border:0.3em solid red;
+  border-top:0.3em solid #fff;
+}
+
+.output{
+  word-break: break-all;
+}
+
+.settings{
+  display: flex;
+  flex-direction: column;
+  width:10%;
+  padding: 10px;
+}

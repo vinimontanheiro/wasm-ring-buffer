@@ -1,4 +1,4 @@
-export class RingBuffer{
+export class WasmRingBuffer{
   bufferSize:number;
   enqueue(float32Array: Float32Array):void;
   dequeue(outputFloat32Array: Float32Array):void;

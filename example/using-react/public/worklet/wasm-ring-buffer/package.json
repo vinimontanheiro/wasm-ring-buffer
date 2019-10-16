@@ -4,7 +4,7 @@
   "main": "./index.js",
   "repository": "git@github.com:vmontanheiro/wasm-ring-buffer.git",
   "author": "Vinícius Montanheiro <vinicius.amonranheiro@gmail.com>",
-  "license": "MIT",
+  "license": "ASF",
   "keywords": [
     "WebAssembly",
     "wasm",
