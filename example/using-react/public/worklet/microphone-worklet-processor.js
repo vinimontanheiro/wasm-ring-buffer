@@ -10,6 +10,16 @@ class MicrophoneWorkletProcessor extends AudioWorkletProcessor {
     this._bufferSize = options.processorOptions.bufferSize;
     this._capacity = options.processorOptions.capacity;
     this._ringBuffer = new WasmRingBuffer(this._capacity, this._bufferSize);
+    this._ready = true;
+    this.port.onmessage = this.onmessage.bind(this);
+  }
+
+  onmessage({ data }){
+    this._ready = data.ready;
+
+    if(!this._ready){
+      this._ringBuffer.clear();
+    }
   }
 
   float32ToInt16(float32array) {
@@ -50,19 +60,21 @@ class MicrophoneWorkletProcessor extends AudioWorkletProcessor {
   }
 
   process(inputs) {
-    const input = inputs[0];
-    const output = new Float32Array(this._bufferSize);
-    this._ringBuffer.enqueue(input[0]);
-
-    while (this._ringBuffer.size() >= this._bufferSize) {
-      this._ringBuffer.dequeue(output);
-      const int16array = this.float32ToInt16(output);
-      const payload = this.linearToAlaw(int16array);
-      const sharedPayload = new Uint8Array(new SharedArrayBuffer(payload.length));
-      sharedPayload.set(payload, 0);
-      this.port.postMessage(sharedPayload);
+    if(this._ready){
+      const input = inputs[0];
+      const output = new Float32Array(this._bufferSize);
+      this._ringBuffer.enqueue(input[0]);
+  
+      while (this._ringBuffer.size() >= this._bufferSize) {
+        this._ringBuffer.dequeue(output);
+        const int16array = this.float32ToInt16(output);
+        const payload = this.linearToAlaw(int16array);
+        const sharedPayload = new Uint8Array(new SharedArrayBuffer(payload.length));
+        sharedPayload.set(payload, 0);
+        this.port.postMessage(sharedPayload);
+      }
     }
-
+   
     return true;
   }
 }

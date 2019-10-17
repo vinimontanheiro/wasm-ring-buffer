@@ -21,11 +21,13 @@ private:
     int capacity;
 public:
     Queue();
+    ~Queue();
     void enqueue(T item);
     T dequeue();
     int size();
     bool isEmpty();
     void setCapacity(int capacity);
+    void clear();
     void show();
 };
 
@@ -37,6 +39,11 @@ Queue<T>::Queue(){
     this->tail = NULL;
     this->counter = 0;
     this->capacity = 1024;
+}
+
+template <class T>
+Queue<T>::~Queue(){
+    this->clear();
 }
 
 template <class T>
@@ -96,6 +103,12 @@ void Queue<T>::setCapacity(int capacity){
 }
 
 template <class T>
+void Queue<T>::clear(){
+    delete this->head;
+    delete this->tail;
+}
+
+template <class T>
 void Queue<T>::show(){
     Node<T> *node = new Node<T>;
     node = this->head;
@@ -104,4 +117,5 @@ void Queue<T>::show(){
         node = node->next;
      }
      cout<<endl;
+     delete node;
 }

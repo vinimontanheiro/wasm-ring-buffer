@@ -4,6 +4,7 @@ export class WasmRingBuffer{
   dequeue(outputFloat32Array: Float32Array):void;
   size():number;
   isEmpty():boolean;
+  clear():void;
 
    /**
   * Ring Buffer can handles the input buffer from specific size and give you  
