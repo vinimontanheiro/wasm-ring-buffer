@@ -5,6 +5,7 @@ import RTPBuilder from './services/RTPBuilder';
 const App = () => {
 
   const [microphoneAudioContext, setMicrophoneAudioContext] = useState(null);
+  const [microphoneWorkletNode, setMicrophoneWorkletNode] = useState(null);
   const [running, setRunning] = useState(false);
   const [srtBuffer, setStrBuffer] = useState("");
   const [state, setState] = useState({
@@ -65,6 +66,8 @@ const App = () => {
             setMicrophoneAudioContext(inputAudioContext);
             setStrBuffer("");
             setRunning(true);
+            audioWorkletNode.port.postMessage({ ready : true });
+            setMicrophoneWorkletNode(audioWorkletNode);
           })
           .catch(e => {
             console.log(`AudioManager >> startMicrophoneCapture >>> GetUserMedia >> `, e);
@@ -78,19 +81,24 @@ const App = () => {
         setStrBuffer("");
       });
     },
-    [setMicrophoneAudioContext, setRunning, bufferSize, capacity, channelCount, sampleRate],
+    [setMicrophoneAudioContext, setMicrophoneWorkletNode, setRunning, bufferSize, capacity, channelCount, sampleRate],
   );
 
   const handleStop = useCallback(
     () => {
+      if(microphoneWorkletNode){
+        microphoneWorkletNode.port.postMessage({ ready : false });
+      }
       if (microphoneAudioContext) {
         microphoneAudioContext.close();
         setMicrophoneAudioContext(null);
+        setMicrophoneWorkletNode(null);
         setRunning(false);
         setStrBuffer("");
       }
+      
     },
-    [setMicrophoneAudioContext, microphoneAudioContext, setRunning],
+    [setMicrophoneAudioContext, microphoneAudioContext,setMicrophoneWorkletNode, microphoneWorkletNode, setRunning],
   );
    
   return (

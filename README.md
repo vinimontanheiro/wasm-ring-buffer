@@ -1,11 +1,11 @@
-## This Web Assembly Ring Buffer can handles the input buffer from specific size and give you an output buffer with any sizes that you want
+## This Web Assembly Ring Buffer can handles an input buffer from specific size and give you an output buffer with any sizes that you want
 
 # Features
 
 - Manipulate Input and Output PCM Data
 - Dynamic buffer sizes
-- Wasm Ring Buffer implemented in C++
-- Processement very fast
+- Wasm Ring Buffer Queue implemented in C++
+- High processment
 
 # Install
 ```

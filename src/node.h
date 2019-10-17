@@ -13,10 +13,14 @@ public:
 	T item;
 	Node<T> *next;
 	Node();
+	~Node();
 };
 
 #endif /* NODE_H_ */
 
 template <class T>
 Node<T>::Node() {}
+
+template <class T>
+Node<T>::~Node() {}
 

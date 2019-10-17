@@ -60,6 +60,14 @@ class WasmRingBuffer {
   isEmpty() {
     return this._module._isEmpty();
   }
+
+  /**
+  * Umount the object
+  *
+  */
+  clear() {
+    this._module._clear();
+  }
 }
 
 export default WasmRingBuffer;

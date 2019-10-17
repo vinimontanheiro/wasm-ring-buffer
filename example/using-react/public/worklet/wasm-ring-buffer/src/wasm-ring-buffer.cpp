@@ -13,7 +13,9 @@
 #include <emscripten/emscripten.h>
 #include "queue.h"
 
+#ifdef __cplusplus 
 extern "C" {
+#endif
     Queue<float> queue;
      
      EMSCRIPTEN_KEEPALIVE
@@ -48,7 +50,10 @@ extern "C" {
      }
 
      EMSCRIPTEN_KEEPALIVE
-     void show(){
-          queue.show();
+     void clear(int capacity){
+          queue.clear();
      }
+#ifdef __cplusplus 
 }
+#endif
+
