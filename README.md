@@ -8,12 +8,12 @@
 - High processment
 
 # Install
-```
+```sh
 npm install wasm-ring-buffer
 ```
 
 # Usage
-```
+```js
 import WasmRingBuffer from 'wasm-ring-buffer';
 ```
 
@@ -42,7 +42,7 @@ For browser definitions a WebAssembly implementation can not run in the Main Thr
 # Example
 
 ## AudioContext + AudioWorklet
-```
+```js
 const inputAudioContext = new AudioContext({ sampleRate: 8000 });
       inputAudioContext.audioWorklet
       .addModule('your-worklet-processor.js')
@@ -72,7 +72,7 @@ const inputAudioContext = new AudioContext({ sampleRate: 8000 });
 
 ## your-worklet-processor.js
 
-```
+```js
 import WasmRingBuffer from 'wasm-ring-buffer/index.js';
 import { LOG_TABLE } from './constants.js';
 
