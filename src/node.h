@@ -1,7 +1,7 @@
 /**
  * @author Vinícius Montanheiro
  * @email vinicius.amontanheiro@gmail.com
- * @since 08/2012 PUC-GO
+ * @since 08/2013 PUC-GO
  */
 
 #ifndef NODE_H_
